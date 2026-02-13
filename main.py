@@ -1,8 +1,25 @@
+import json
+import os
+
+
 def mostrar_menu():
     print("\n=== Sistema de Cadastro de Usuários ===")
     print("1 - Cadastrar usuário")
     print("2 - Listar usuários")
     print("0 - Sair")
+
+
+def carregar_usuarios():
+    if os.path.exists("usuarios.json"):
+        with open("usuarios.json", "r", encoding="utf-8") as arquivo:
+            return json.load(arquivo)
+    else:
+        return []
+
+
+def salvar_usuarios(lista_usuarios):
+    with open("usuarios.json", "w", encoding="utf-8") as arquivo:
+        json.dump(lista_usuarios, arquivo, ensure_ascii=False, indent=4)
 
 
 def cadastrar_usuario(lista_usuarios):
@@ -13,6 +30,7 @@ def cadastrar_usuario(lista_usuarios):
         return
 
     lista_usuarios.append(nome)
+    salvar_usuarios(lista_usuarios)
     print("Usuário cadastrado com sucesso!")
 
 
@@ -27,7 +45,7 @@ def listar_usuarios(lista_usuarios):
 
 
 def main():
-    usuarios = []
+    usuarios = carregar_usuarios()
     opcao = ""
 
     while opcao != "0":
