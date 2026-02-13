@@ -1,46 +1,47 @@
-import tkinter as tk
-from tkinter import messagebox
+def mostrar_menu():
+    print("\n=== Sistema de Cadastro de Usuários ===")
+    print("1 - Cadastrar usuário")
+    print("2 - Listar usuários")
+    print("0 - Sair")
 
-usuarios = []
 
-def cadastrar_usuario():
-    nome = entry_nome.get()
-    email = entry_email.get()
+def cadastrar_usuario(lista_usuarios):
+    nome = input("Digite o nome do usuário: ")
 
-    if nome == "" or email == "":
-        messagebox.showwarning("Erro", "Preencha todos os campos!")
+    if nome.strip() == "":
+        print("Nome inválido. Cadastro cancelado.")
         return
 
-    usuarios.append(f"{nome} - {email}")
-    atualizar_lista()
+    lista_usuarios.append(nome)
+    print("Usuário cadastrado com sucesso!")
 
-    entry_nome.delete(0, tk.END)
-    entry_email.delete(0, tk.END)
 
-def atualizar_lista():
-    listbox.delete(0, tk.END)
-    for usuario in usuarios:
-        listbox.insert(tk.END, usuario)
+def listar_usuarios(lista_usuarios):
+    if len(lista_usuarios) == 0:
+        print("Nenhum usuário cadastrado.")
+        return
 
-# Janela principal
-janela = tk.Tk()
-janela.title("Sistema de Cadastro de Usuários")
-janela.geometry("400x300")
+    print("\nUsuários cadastrados:")
+    for indice, nome in enumerate(lista_usuarios, start=1):
+        print(f"{indice} - {nome}")
 
-# Labels e entradas
-tk.Label(janela, text="Nome").pack()
-entry_nome = tk.Entry(janela)
-entry_nome.pack()
 
-tk.Label(janela, text="Email").pack()
-entry_email = tk.Entry(janela)
-entry_email.pack()
+def main():
+    usuarios = []
+    opcao = ""
 
-# Botão
-tk.Button(janela, text="Cadastrar", command=cadastrar_usuario).pack(pady=10)
+    while opcao != "0":
+        mostrar_menu()
+        opcao = input("Escolha uma opção: ")
 
-# Lista
-listbox = tk.Listbox(janela, width=50)
-listbox.pack()
+        if opcao == "1":
+            cadastrar_usuario(usuarios)
+        elif opcao == "2":
+            listar_usuarios(usuarios)
+        elif opcao == "0":
+            print("Saindo do sistema...")
+        else:
+            print("Opção inválida.")
 
-janela.mainloop()
+
+main()
