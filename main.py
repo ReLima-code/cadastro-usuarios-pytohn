@@ -23,13 +23,19 @@ def salvar_usuarios(lista_usuarios):
 
 
 def cadastrar_usuario(lista_usuarios):
-    nome = input("Digite o nome do usuário: ")
+    nome = input("Digite o nome do usuário: ").strip()
+    email = input("Digite o email do usuário: ").strip()
 
-    if nome.strip() == "":
-        print("Nome inválido. Cadastro cancelado.")
+    if nome == "" or email == "":
+        print("Nome ou email inválido. Cadastro cancelado.")
         return
+    
+    usuario = {
+        "nome": nome,
+        "email": email
+    }
 
-    lista_usuarios.append(nome)
+    lista_usuarios.append(usuario)
     salvar_usuarios(lista_usuarios)
     print("Usuário cadastrado com sucesso!")
 
@@ -40,8 +46,8 @@ def listar_usuarios(lista_usuarios):
         return
 
     print("\nUsuários cadastrados:")
-    for indice, nome in enumerate(lista_usuarios, start=1):
-        print(f"{indice} - {nome}")
+    for indice, usuario in enumerate(lista_usuarios, start=1):
+        print(f"{indice} - Nome: {usuario['nome']} | Email: {usuario['email']}")
 
 
 def main():
