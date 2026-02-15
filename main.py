@@ -6,6 +6,7 @@ def mostrar_menu():
     print("\n=== Sistema de Cadastro de Usuários ===")
     print("1 - Cadastrar usuário")
     print("2 - Listar usuários")
+    print("3 - Remover usuário")
     print("0 - Sair")
 
 
@@ -50,6 +51,26 @@ def listar_usuarios(lista_usuarios):
         print(f"{indice} - Nome: {usuario['nome']} | Email: {usuario['email']}")
 
 
+def remover_usuario(lista_usuarios):
+    if len(lista_usuarios) == 0:
+        print("Nenhum usário para remover.")
+        return
+    
+    listar_usuarios(lista_usuarios)
+
+    try:
+        indice = int(input("Digite o número de usuário que deseja remover: "))
+
+        if 1 <= indice <= len(lista_usuarios):
+            usuario_removido = lista_usuarios.pop(indice - 1)
+            salvar_usuarios(lista_usuarios)
+            print(f"Usuário {usuario_removido['nome']} removido com sucesso!")
+        else:
+            print("Número invalido.")
+    except ValueError:
+        print("Digite um número válido.")
+
+
 def main():
     usuarios = carregar_usuarios()
     opcao = ""
@@ -62,6 +83,8 @@ def main():
             cadastrar_usuario(usuarios)
         elif opcao == "2":
             listar_usuarios(usuarios)
+        elif opcao == "3":
+            remover_usuario(usuarios)
         elif opcao == "0":
             print("Saindo do sistema...")
         else:
