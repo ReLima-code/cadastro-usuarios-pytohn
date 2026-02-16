@@ -35,6 +35,14 @@ def listar():
     for usuario in usuarios:
         lista_box.insert(tk.END, f"{usuario['nome']} - {usuario['email']}")
 
+def buscar():
+    termo = entry_busca.get().lower()
+    lista_box.delete(0, tk.END)
+
+    for usuario in usuarios:
+        if termo in usuario["nome"].lower():
+            lista_box.insert(tk.END, f"{usuario['nome']} - {usuario['email']}")
+
 def remover():
     selecionado = lista_box.curselection()
     if not selecionado:
@@ -64,6 +72,14 @@ entry_email.pack()
 
 tk.Button(janela, text="Cadastrar", command=cadastrar).pack(pady=5)
 tk.Button(janela, text="Listar Usuários", command=listar).pack(pady=5)
+
+tk.Label(janela, text="Buscar por nome").pack()
+
+entry_busca = tk.Entry(janela)
+entry_busca.pack()
+
+tk.Button(janela, text="Buscar", command=buscar).pack(pady=5)
+tk.Button(janela, text="Mostrar Todos", command=listar).pack(pady=5)
 
 lista_box = tk.Listbox(janela)
 lista_box.pack(fill=tk.BOTH, expand=True, pady=5)
